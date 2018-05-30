@@ -7,7 +7,7 @@ $Tests = Import-Csv -path "$here\Convert-IPCidrNotationToIpSubnetMaskNotation.Te
 Foreach ($Test in $Tests)
 {
     Describe "Convert-IPCIDRNotationtoIPSubnetMaskNotation for $($Test.Input)" {
-        $Result = Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR $Test.Input
+        $Result = Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR $($Test.Input)
         It "IPCIDR result should be $($Test.ExpectedIpCIDR)" {
             $Result | Select-Object -ExpandProperty IPCIDR | Should -Be $($Test.ExpectedIpCIDR)
         }
