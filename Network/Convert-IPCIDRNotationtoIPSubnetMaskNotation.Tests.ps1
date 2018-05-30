@@ -2,18 +2,23 @@
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 . "$here\$sut"
 
-Describe "Convert-IPCIDRNotationtoIPSubnetMaskNotation" {
-    $Result = Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '192.168.1.2/24'
-    It "IPCIDR result should be 192.168.1.2/24" {
-        $Result | Select-Object -ExpandProperty IPCIDR | Should -Be '192.168.1.2/24' 
-    }
-    It "IPAddress result should be 192.168.1.2" {
-        $Result | Select-Object -ExpandProperty IpAddress | Should -Be '192.168.1.2'
-    }
-    It "SubNetMask result should be 255.255.255.0" {
-        $Result | Select-Object -ExpandProperty SubNetMask | Should -Be '255.255.255.0'
-    }
-    It "Ip and subnet mask result should be 192.168.1.2 255.255.255.0" {
-        $Result | Select-Object -ExpandProperty IpAndSubNetMask | Should -Be '192.168.1.2 255.255.255.0'
+$Tests = Import-Csv -path "$here\Convert-IPCidrNotationToIpSubnetMaskNotation.Tests.Csv" -Delimiter ';'
+
+Foreach ($Test in $Tests)
+{
+    Describe "Convert-IPCIDRNotationtoIPSubnetMaskNotation for $($Test.Input)" {
+        $Result = Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR $Test.Input
+        It "IPCIDR result should be $($Test.ExpectedIpCIDR)" {
+            $Result | Select-Object -ExpandProperty IPCIDR | Should -Be $($Test.ExpectedIpCIDR)
+        }
+        It "IPAddress result should be $($Test.ExpectedIPAddress)" {
+            $Result | Select-Object -ExpandProperty IpAddress | Should -Be $($Test.ExpectedIPAddress)
+        }
+        It "SubNetMask result should be $($Test.ExpectedSubnetMask)" {
+            $Result | Select-Object -ExpandProperty SubNetMask | Should -Be $($Test.ExpectedSubnetMask)
+        }
+        It "Ip and subnet mask result should be $($Test.ExpectedIpAndSubnetMask)" {
+            $Result | Select-Object -ExpandProperty IpAndSubNetMask | Should -Be $($Test.ExpectedIpAndSubnetMask)
+        }
     }
 }
