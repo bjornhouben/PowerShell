@@ -4,7 +4,7 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 
 $Tests = Import-Csv -path "$here\Convert-IPCidrNotationToIpSubnetMaskNotation.Tests.Csv" -Delimiter ';'
 
-Foreach ($Test in $Tests)
+Foreach ($Test in $Tests) #Should look into using test cases instead
 {
     Describe "Convert-IPCIDRNotationtoIPSubnetMaskNotation for $($Test.Input)" {
         $Result = Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR $($Test.Input)
