@@ -1,1 +1,2 @@
 ﻿Invoke-Pester .\Convert-IPCIDRNotationtoIPSubnetMaskNotation.Tests.ps1 -CodeCoverage .\Convert-IPCIDRNotationtoIPSubnetMaskNotation.ps1
+#$Result= Invoke-Pester .\Convert-IPCIDRNotationtoIPSubnetMaskNotation.Tests.ps1 -CodeCoverage .\Convert-IPCIDRNotationtoIPSubnetMaskNotation.ps1 -PassThru
