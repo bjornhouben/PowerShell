@@ -118,7 +118,7 @@
     [CmdletBinding(SupportsShouldProcess=$true)] #Provides advanced functionality. For more details see "What does PowerShell's [CmdletBinding()] Do?" : http://www.windowsitpro.com/blog/powershell-with-a-purpose-blog-36/windows-powershell/powershells-[cmdletbinding]-142114
     Param
     (
-        #Defines the $XADataCollector parameter
+        #Defines the IPCIDR parameter
         [Parameter(Mandatory=$true, #Parameter is mandatory.
                    ValueFromPipeline=$True, #Allows pipeline input.
                    Position=0, #Allows function to be called without explicitly specifying parameters, but instead using positional parameters in the correct order
@@ -130,7 +130,7 @@
 
     BEGIN
     {
-        $Output = @() #Create empty relay to contain results
+        $Output = @() #Create empty array to contain results
     }
     PROCESS
     {
@@ -141,7 +141,7 @@
             }
             ELSE
             {
-                if ($pscmdlet.ShouldProcess("$entry", "Convert IPCIDR notation to IP SubnetMask notation"))
+                if ($pscmdlet.ShouldProcess("$entry", 'Convert IPCIDR notation to IP SubnetMask notation'))
                 {
                     Write-Verbose -Message "Try splitting the IP and CIDR from the IPCIDR input for $entry"
                     $IP = $entry.split('/')[0]
@@ -157,8 +157,8 @@
                         5   {'248.0.0.0'}
                         6   {'252.0.0.0'}
                         7   {'254.0.0.0'}
-                        8	{'255.0.0.0'}
-                        9	{'255.128.0.0'}
+                        8	  {'255.0.0.0'}
+                        9	  {'255.128.0.0'}
                         10	{'255.192.0.0'}
                         11	{'255.224.0.0'}
                         12	{'255.240.0.0'}
