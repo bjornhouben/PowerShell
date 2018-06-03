@@ -123,6 +123,7 @@
                    ValueFromPipeline=$True, #Allows pipeline input.
                    Position=0, #Allows function to be called without explicitly specifying parameters, but instead using positional parameters in the correct order
                    HelpMessage='Enter the Enter the IPCIDR as follows: "192.168.2.1/24"')] #Enter a help message to be shown when no parameter value is provided.
+        [ValidateScript({$_ -match "^([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\/([0-9]|[12][0-9]|3[0-2])$"})]
         [ValidateNotNullOrEmpty()] #Validate the input is not NULL or empty
         [String[]]$IPCIDR #IPCIDR parameter is of the String array type and can contain multiple string.
     )
@@ -148,7 +149,6 @@
 
                     $SubnetMask = switch ($CIDR) #Get the subnet mask belonging to the CIDR notation
                     { 
-                        default {'Error'}
                         0   {'0.0.0.0'}
                         1   {'128.0.0.0'}
                         2   {'192.0.0.0'}

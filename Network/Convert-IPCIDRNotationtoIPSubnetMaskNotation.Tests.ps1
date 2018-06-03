@@ -2,6 +2,27 @@
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 . "$here\$sut"
 
+Describe "Verify input validation working correctly" {
+    It "Valid input (1.1.1.1/0) Should not throw" {
+        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1/0' | Should Not Throw}
+    }
+    It "Invalid formatting (1.1.1.1-0 instead of 1.1.1.1/0) should throw" {
+        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1-0' | Should Not Throw}
+    }
+    It "Invalid IP address (1.1.1.1.1) Should throw" {
+        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1.1/0' | Should Not Throw}
+    }
+    It "Invalid IP address (1.1.1.256) Should throw" {
+        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1.1/0' | Should Not Throw}
+    }
+    It "Invalid IP address (001.001.001.001) Should throw" {
+        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1.1/0' | Should Not Throw}
+    }
+    It "Invalid CIDR (/33) Should Throw" {
+        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1/33' | Should Throw}
+    }
+}
+
 #region example using CSV for performing tests
 $Tests = Import-Csv -path "$here\Convert-IPCidrNotationToIpSubnetMaskNotation.Tests.Csv" -Delimiter ';'
 Foreach ($Test in $Tests) #Determine for your own situation if you should use a foreach or Pester test cases 
@@ -64,7 +85,6 @@ Describe "Verify if output from Convert-IPCIDRNotationtoIPSubnetMaskNotation is 
         @{InputValue = '192.168.1.1/30'; ExpectedIPCIDR = '192.168.1.1/30'; ExpectedIpAddress = '192.168.1.1'; ExpectedSubnetMask = '255.255.255.252'; ExpectedIpAndSubnetMask = '192.168.1.1 255.255.255.252'}
         @{InputValue = '192.168.1.1/31'; ExpectedIPCIDR = '192.168.1.1/31'; ExpectedIpAddress = '192.168.1.1'; ExpectedSubnetMask = '255.255.255.254'; ExpectedIpAndSubnetMask = '192.168.1.1 255.255.255.254'}
         @{InputValue = '192.168.1.1/32'; ExpectedIPCIDR = '192.168.1.1/32'; ExpectedIpAddress = '192.168.1.1'; ExpectedSubnetMask = '255.255.255.255'; ExpectedIpAndSubnetMask = '192.168.1.1 255.255.255.255'}
-        @{InputValue = '192.168.1.1/33'; ExpectedIPCIDR = '192.168.1.1/33'; ExpectedIpAddress = '192.168.1.1'; ExpectedSubnetMask = 'Error'; ExpectedIpAndSubnetMask = '192.168.1.1 Error'}
         )
 
     It "IPCIDR result for input <inputvalue> should be <ExpectedIPCIDR>" -TestCases $TestCases {
