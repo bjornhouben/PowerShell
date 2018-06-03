@@ -26,7 +26,7 @@ Foreach ($Test in $Tests) #Determine for your own situation if you should use a 
 
 #region example using testcases for performing tests
 
-#I personally prefer the output from the CSV example, but from what I understood using testcases is better when the results of the tests are used by other applications like NUnit
+#I personally prefer the output from the CSV example and that I run the function only once per input. But from what I understood using testcases is better when the results of the tests are used by other applications like NUnit
 #When trying to convert the CSV based test to a test cases test I ran into the issue that the CSV column was initially called input and that I tried to use $input which is an automatic variable. For more info see: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_automatic_variables
 
 Describe "Verify if output from Convert-IPCIDRNotationtoIPSubnetMaskNotation is correct" {
