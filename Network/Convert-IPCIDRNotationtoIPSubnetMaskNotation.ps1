@@ -1,4 +1,7 @@
-﻿Function Convert-IPCIDRNotationtoIPSubnetMaskNotation
+<# Tags for searching and finding in GitHub
+Tag:Network,Tag:CIDR,Tag:Subnetmask,Tag:Convert
+#>
+Function Convert-IPCIDRNotationtoIPSubnetMaskNotation
 {
  <#
       .Synopsis
