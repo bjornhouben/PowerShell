@@ -1,4 +1,4 @@
-﻿Function Get-NthDayNameOfMonthInfo #add pester tests
+﻿Function Get-NthDayNameOfMonthInfo
 {
 <#
 .SYNOPSIS
@@ -143,7 +143,7 @@ AUTHOR      :  Bjorn Houben (bjorn@bjornhouben.com)
     }
     PROCESS
     {
-        1..$DaysInCurrentMonth | Foreach{
+        1..$DaysInCurrentMonth | ForEach-Object{
             
             $DateTime = Get-Date -Day $_ -Month $MonthNumber -Year $Year -Hour 0 -Minute 0 -Second 0 -Millisecond 0
             #Create the object to output and add it to $Output

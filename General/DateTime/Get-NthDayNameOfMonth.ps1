@@ -1,4 +1,4 @@
-﻿Function Get-NthDayNameOfMonth #add pester tests
+﻿Function Get-NthDayNameOfMonth
 {
 <#
 .SYNOPSIS

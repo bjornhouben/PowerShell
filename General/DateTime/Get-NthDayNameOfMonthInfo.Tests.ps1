@@ -57,7 +57,7 @@ Describe "Verify if some values for July 2019 are correct " {
     $July2019NthDayNameOfMonthInfo = (Get-NthDayNameOfMonthInfo -MonthNumber 7 -Year 2019)
 
     It "Verify if values for July 1st 2019 are correct" {
-        $July1st2019 = $July2019NthDayNameOfMonthInfo | Where{$_.DayNumber -eq 1}
+        $July1st2019 = $July2019NthDayNameOfMonthInfo | Where-Object{$_.DayNumber -eq 1}
         $July1st2019.DayName | Should -Be (Get-Culture).DateTimeFormat.DayNames[1]
         $July1st2019.Monthnumber | Should -Be 7
         $July1st2019.Daynumber | Should -Be 1
@@ -65,7 +65,7 @@ Describe "Verify if some values for July 2019 are correct " {
         $July1st2019.DateTimeObject | Should -be (Get-Date -Day 1 -Month 7 -Year 2019 -Hour 0 -Minute 0 -Second 0 -Millisecond 0)
     }
         It "Verify if values for July 23nd 2019 are correct" {
-        $July23rd2019 = $July2019NthDayNameOfMonthInfo | Where{$_.DayNumber -eq 23}
+        $July23rd2019 = $July2019NthDayNameOfMonthInfo | Where-Object{$_.DayNumber -eq 23}
         $July23rd2019.DayName | Should -Be (Get-Culture).DateTimeFormat.DayNames[2]
         $July23rd2019.Monthnumber | Should -Be 7
         $July23rd2019.Daynumber | Should -Be 23
@@ -74,7 +74,7 @@ Describe "Verify if some values for July 2019 are correct " {
     }
  
     It "Verify if values for July 31st 2019 are correct" {
-        $July31st2019 = $July2019NthDayNameOfMonthInfo | Where{$_.DayNumber -eq 31}
+        $July31st2019 = $July2019NthDayNameOfMonthInfo | Where-Object{$_.DayNumber -eq 31}
         $July31st2019.DayName | Should -Be (Get-Culture).DateTimeFormat.DayNames[3]
         $July31st2019.Monthnumber | Should -Be 7
         $July31st2019.Daynumber | Should -Be 31
@@ -87,7 +87,7 @@ Describe "Verify if some values for February 2020 are correct " {
     $February2020NthDayNameOfMonthInfo = (Get-NthDayNameOfMonthInfo -MonthNumber 2 -Year 2020)
 
     It "Verify if values for July 1st 2019 are correct" {
-        $February1st2020 = $February2020NthDayNameOfMonthInfo | Where{$_.DayNumber -eq 1}
+        $February1st2020 = $February2020NthDayNameOfMonthInfo | Where-Object{$_.DayNumber -eq 1}
         $February1st2020.DayName | Should -Be (Get-Culture).DateTimeFormat.DayNames[6]
         $February1st2020.Monthnumber | Should -Be 2
         $February1st2020.Daynumber | Should -Be 1
@@ -95,7 +95,7 @@ Describe "Verify if some values for February 2020 are correct " {
         $February1st2020.DateTimeObject | Should -be (Get-Date -Day 1 -Month 2 -Year 2020 -Hour 0 -Minute 0 -Second 0 -Millisecond 0)
     }
         It "Verify if values for February 23nd 2019 are correct" {
-        $February23rd2020 = $February2020NthDayNameOfMonthInfo | Where{$_.DayNumber -eq 23}
+        $February23rd2020 = $February2020NthDayNameOfMonthInfo | Where-Object{$_.DayNumber -eq 23}
         $February23rd2020.DayName | Should -Be (Get-Culture).DateTimeFormat.DayNames[0]
         $February23rd2020.Monthnumber | Should -Be 2
         $February23rd2020.Daynumber | Should -Be 23
@@ -104,7 +104,7 @@ Describe "Verify if some values for February 2020 are correct " {
     }
  
     It "Verify if values for February 29th 2019 are correct" {
-        $February29th2020 = $February2020NthDayNameOfMonthInfo | Where{$_.DayNumber -eq 29}
+        $February29th2020 = $February2020NthDayNameOfMonthInfo | Where-Object{$_.DayNumber -eq 29}
         $February29th2020.DayName | Should -Be (Get-Culture).DateTimeFormat.DayNames[6]
         $February29th2020.Monthnumber | Should -Be 2
         $February29th2020.Daynumber | Should -Be 29

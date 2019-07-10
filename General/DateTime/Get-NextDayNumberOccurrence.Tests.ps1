@@ -2,7 +2,6 @@
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 . "$here\$sut"
 
-
 #Variables
 $Year = (Get-Date).Year
 $Months = 1..12
@@ -15,7 +14,7 @@ $DaysInMonths = Foreach($Month in $Months)
 }
 
 Describe 'Test DayNumber validation for valid inputs 1-31'{
-    1..31 | Foreach-Object{
+    1..31 | ForEach-Object{
         It "Valid DayNumber ($_) should not throw"{
             {Get-NextDayNumberOccurrence -DayNumber $_} | Should NOT THROW
         }
@@ -23,7 +22,7 @@ Describe 'Test DayNumber validation for valid inputs 1-31'{
 }
 
 Describe 'Test DayNumber validation for invalid inputs 0,-1,32,33'{
-    @(-1,0,32,33) | Foreach-Object{
+    @(-1,0,32,33) | ForEach-Object{
         It "Invalid DayNumber ($_) should throw"{
             {Get-NextDayNumberOccurrence -DayNumber $_} | Should THROW
         }
@@ -34,7 +33,7 @@ Describe 'Test ReferenceDate Validation for valid inputs'{
     Foreach($Month in $Months)
     {
         $DaysInMonth = $DaysInMonths | Where-Object{$_.Month -eq $Month} | Select-Object -ExpandProperty DaysInMonth
-        1..$DaysInMonth | Foreach-Object{
+        1..$DaysInMonth | ForEach-Object{
             It "Valid day number input ($_) should not throw in month ($Month)"{
                 {Get-NextDayNumberOccurrence -DayNumber 1 -ReferenceDate Get-Date -date ((Get-Date -day $_ -Month $Month -Year $Year).ToString().Replace("$DaysInMonth","$DaysInMonthPlusOne"))} | Should THROW #Note: I tried getting max days in month and then adding 1 day but this didn't work as expected. By example if I would get max days of September (30) and added 1 so it would become 31, the result of (Get-Date -Day 31 -Month 9 -Year 2019) would be October 1st instead of an error.
             }
