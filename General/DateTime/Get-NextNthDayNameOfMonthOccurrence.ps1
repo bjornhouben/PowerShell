@@ -130,7 +130,7 @@ AUTHOR      :  Bjorn Houben (bjorn@bjornhouben.com)
         }
         ELSE
         {
-            $CurrentDateTime = Get-Date
+            $CurrentDateTime = Get-Date -Hour 0 -Minute 0 -Second 0 -Millisecond 0
         }
 
         #Get the current date time to extract the current month and year
