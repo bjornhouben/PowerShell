@@ -53,6 +53,18 @@ Describe "Verify if the values for July 31st 2019 are correct " {
 }
 #>
 
+<# This is not working either
+Describe "Verify if some values for July 2019 are correct " {
+    $July2019NthDayNameOfMonthInfo = (Get-NthDayNameOfMonthInfo -MonthNumber 7 -Year 2019) | Select-Object -ExcludeProperty DateTimeObject
+    $July2019NthDayNameOfMonthInfoReference = Import-Clixml -path $here\Get-NthDayNameOfMonthInfo_July2019_Export.xml | Select-Object -ExcludeProperty DateTimeObject
+    1..31 | ForEach-Object {
+        It "Verify if values for July 23nd 2019 are correct" {
+        $July2019NthDayNameOfMonthInfo[$_] | Assert-Equivalent $July2019NthDayNameOfMonthInfoReference[$_]
+        }
+    } 
+}
+#>
+
 Describe "Verify if some values for July 2019 are correct " {
     $July2019NthDayNameOfMonthInfo = (Get-NthDayNameOfMonthInfo -MonthNumber 7 -Year 2019)
 
