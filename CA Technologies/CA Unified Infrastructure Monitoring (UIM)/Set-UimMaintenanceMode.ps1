@@ -105,7 +105,7 @@ AUTHOR      :  Bjorn Houben (bjorn@bjornhouben.com)
     [cmdletbinding()]
 
     Param(
-        [Parameter(Position = 0, Mandatory = $TRUE)]
+        [Parameter(Position = 0, Mandatory = $TRUE,ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [string[]]$Computername,
 

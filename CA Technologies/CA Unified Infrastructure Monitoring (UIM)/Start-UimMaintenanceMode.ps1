@@ -70,7 +70,7 @@ AUTHOR      :  Bjorn Houben (bjorn@bjornhouben.com)
     [cmdletbinding()]
 
     Param(
-        [Parameter(Position = 0, Mandatory = $TRUE)]
+        [Parameter(Position = 0, Mandatory = $TRUE,ValueFromPipeline = $true)]
         [ValidateNotNullorEmpty()]
         [string[]]$Computername,
 
@@ -87,7 +87,10 @@ AUTHOR      :  Bjorn Houben (bjorn@bjornhouben.com)
     }
     PROCESS
     {
-        Set-UimMaintenanceMode -ComputerName $computername -Seconds $Seconds -Reason $Reason
+        Foreach($Computer in $Computername)
+        {
+            Set-UimMaintenanceMode -ComputerName $computer -Seconds $Seconds -Reason $Reason
+        }
     }
     END
     {
