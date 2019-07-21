@@ -63,10 +63,10 @@ Specify one or more ports to check. Separate each port by a comma. By example 15
 Set this parameter to $TRUE if you want/need the output to be an object. If set to $FALSE or when not specified, the output will be to console.
 
 .EXAMPLE
-Get-ProcessByPort -PortsToCheck 1505,2144,3306,3389
+Get-ProcessByPort -PortsToCheck 1505,2144,3306,3389,445,2179
 
 ====================================================================
-Script started at 2019-07-20 11:21 on system WINDOWS-0KHJ6UM
+Script started at 2019-07-20 19:18 on system WINDOWS-0KHJ6UM
 
 Specified ports for scan:
 
@@ -74,9 +74,13 @@ Specified ports for scan:
 2144
 3306
 3389
+445
+2179
 
 Ports found in netstat as listening ports:
 
+445
+2179
 
 Ports NOT found in netstat as listening ports:
 
@@ -87,12 +91,28 @@ Ports NOT found in netstat as listening ports:
 
 Output of relevant results from netstat:
 
+LocalPort ProcessID ProcessName Protocol RemoteAddress RemotePort State    
+--------- --------- ----------- -------- ------------- ---------- -----    
+445       4         System      TCP      0.0.0.0       0          LISTENING
+2179      5528      vmms        TCP      0.0.0.0       0          LISTENING
+
+
+
 Output of relevant process info:
 
-Script completed at 2019-07-20 11:21 on system WINDOWS-0KHJ6UM
+LocalPort ProcessID ProcessName Description                        Path                         StartInfoUsername StartInfoWorkingDirectory StartTime          
+--------- --------- ----------- -----------                        ----                         ----------------- ------------------------- ---------          
+445       4         System                                                                                                                  12/07/2019 17:46:07
+2179      5528      vmms        Virtual Machine Management Service C:\WINDOWS\system32\vmms.exe                                             12/07/2019 17:46:31
+
+
+
+Tip: For ports used by System (process ID 4) that you can't relate to a program/process, check Internet Information Services (IIS).
+
+Script completed at 2019-07-20 19:18 on system WINDOWS-0KHJ6UM
 ====================================================================
 
-This command Checks if the ports 1505,2144,3306 and 3389 are listening on the local system and if so, it shows which process/program is behind it.
+This command Checks if the ports 1505,2144,3306,3389,445 and 2179 are listening on the local system and if so, it shows which process/program is behind it.
 
 .EXAMPLE
 Get-ProcessByPort -PortsToCheck (Get-Content -Path 'C:\Temp\PortsToCheck.txt')
@@ -150,6 +170,8 @@ NAME        :  Get-ProcessByPort
 VERSION     :  1.0   
 LAST UPDATED:  2019/07/20
 AUTHOR      :  Bjorn Houben (Twitter @BjornHouben)
+USE CASE    :  1) We from the Windows team often got vulnerabilities assigned to us based on port that belonged to the application team. This script makes it easy to determine it and copy the proof in the ticket.
+               2) When troubleshooting a port being used by a different application, this simplifies your job.  
 To improve  :  Add option to run it against multiple remote computers. For now, PowerShell remoting can be used instead to achieve this.
 
   ****************************************************************
@@ -173,8 +195,9 @@ To improve  :  Add option to run it against multiple remote computers. For now, 
     Param(
     [Parameter(Position = 0)]
     [ValidateNotNullorEmpty()]
-    [string[]]$PortsToCheck,
-    
+    [ValidateRange(1,65535)]
+    [INT[]]$PortsToCheck,
+
     [Parameter(Position = 1)]
     [ValidateNotNullorEmpty()]
     [Boolean]$OutputAsObject
@@ -343,22 +366,3 @@ To improve  :  Add option to run it against multiple remote computers. For now, 
         }
     }
 }
-
-#region run the function
-
-#Specify the ports to check manually
-$PortsToCheck = 1505,2144,3306,3389,445
-
-#Or put the ports to check in .txt file with each port on a separate line
-#$PortsToCheck = Get-Content -Path 'C:\Temp\PortsToCheck.txt' | Select-Object -Unique | Sort-Object
-
-Get-ProcessByPort -PortsToCheck $PortsToCheck
-
-#endregion run the function and store the results
-
-#Modify examples to match OutputAsObject (or not)
-#Examples to output as object or as console output
-#Add parameter in help
-#Modify parameter required options, etc, validation, etc.
-#Add to KPN module
-#If process name is system, check IIS?
