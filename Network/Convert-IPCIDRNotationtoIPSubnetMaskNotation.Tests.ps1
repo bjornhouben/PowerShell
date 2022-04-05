@@ -7,16 +7,16 @@ Describe "Verify input validation working correctly" {
         {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1/0' | Should Not Throw}
     }
     It "Invalid formatting (1.1.1.1-0 instead of 1.1.1.1/0) should throw" {
-        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1-0' | Should Not Throw}
+        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1-0' | Should Throw}
     }
     It "Invalid IP address (1.1.1.1.1) Should throw" {
-        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1.1/0' | Should Not Throw}
+        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1.1/0' | Should Throw}
     }
     It "Invalid IP address (1.1.1.256) Should throw" {
-        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1.1/0' | Should Not Throw}
+        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.256/0' | Should Throw}
     }
     It "Invalid IP address (001.001.001.001) Should throw" {
-        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1.1/0' | Should Not Throw}
+        {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '001.001.001.001/0' | Should Throw}
     }
     It "Invalid CIDR (/33) Should Throw" {
         {Convert-IPCIDRNotationtoIPSubnetMaskNotation -IPCIDR '1.1.1.1/33' | Should Throw}
